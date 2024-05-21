@@ -3,12 +3,14 @@ export type Handler = (() => Promise<void>) | (() => void) | null;
 export type WizardProps = {
   /** Optional header that is shown above the active step */
   header?: React.ReactNode;
+  /** Optional sidebar that is shown before the active step */
+  sidebar?: React.ReactNode;
   /** Optional footer that is shown below the active step */
   footer?: React.ReactNode;
   /** Optional start index @default 0 */
   startIndex?: number;
   /**
-   * Optional wrapper that is exclusively wrapped around the active step component. It is not wrapped around the `header` and `footer`
+   * Optional wrapper that is exclusively wrapped around the active step component. It is not wrapped around the `header`, `sidebar` and `footer`
    * @example With `framer-motion` - `<AnimatePresence />`
    * ```jsx
    * <Wizard wrapper={<AnimatePresence exitBeforeEnter />}>
@@ -17,8 +19,23 @@ export type WizardProps = {
    * ```
    */
   wrapper?: React.ReactElement;
+  /**
+   * Optional wrapper that is exclusively wrapped around the sidebar and active step component. It is not wrapped around the `header` and `footer`
+   * @example With `framer-motion` - `<AnimatePresence />`
+   * ```jsx
+   * <Wizard wrapper={<AnimatePresence exitBeforeEnter />}>
+   * ...
+   * </Wizard>
+   * ```
+   */
+  sidebarAndStepWrapper?: React.ReactElement;
   /** Callback that will be invoked with the new step index when the wizard changes steps */
   onStepChange?: (stepIndex: number) => void;
+};
+
+export type StepName = {
+  number: number;
+  name: string;
 };
 
 export type WizardValues = {
@@ -55,6 +72,8 @@ export type WizardValues = {
   isFirstStep: boolean;
   /** Indicate if the current step is the last step (aka no next step) */
   isLastStep: boolean;
+  /** The labels of each step */
+  stepNames: StepName[];
 };
 
 /** Console log levels */
